@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
-    <Folder Include="Services\Interfaces\" />
-    <Folder Include="Services\Implementation\" />
+    <ProjectReference Include="..\Escuela.Domain\Escuela.Domain.csproj" />
+    <ProjectReference Include="..\Escuela.Infrastructure\Escuela.Infrastructure.csproj" />
+    <ProjectReference Include="..\Escuela.Utils\Escuela.Utils.csproj" />
   </ItemGroup>
 
 </Project>
