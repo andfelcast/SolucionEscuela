@@ -1,13 +1,27 @@
 ﻿using System.Text;
 using System.Security.Cryptography;
-
-namespace Escuela.Utils
+using EscuelaWebAPI.DTO.Student;
+using Escuela.Domain.Entities;
+namespace EscuelaWebAPI.Utils
 {
     public static class Utilities
     {
-        public static global::EscuelaWebAPI.DTO.Student.StudentDTO ConvertToDto(Escuela.Domain.Entities.Student item)
+        public static StudentDTO ConvertToDto(Student item)
         {
-            throw new NotImplementedException();
+            return new StudentDTO
+            {
+                Id = item.Id,
+                Active = item.Active,
+                Address = item.Address,
+                BirthDate = item.BirthDate,
+                City = item.City,
+                FirstName = item.FirstName,
+                CreationDate =  item.CreationDate,
+                Credits = item.StudentXsubjects.Count * 3,
+                Email = item.Email,
+                LastName = item.LastName,
+                UserName = item.UserName,                
+            };
         }
 
         public static string Encrypt(string data) {

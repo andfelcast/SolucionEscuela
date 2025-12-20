@@ -27,5 +27,7 @@ public partial class Student
 
     public DateTime CreationDate { get; set; }
 
+    public bool Active { get; set; }
+
     public virtual ICollection<StudentXsubject> StudentXsubjects { get; set; } = new List<StudentXsubject>();
 }

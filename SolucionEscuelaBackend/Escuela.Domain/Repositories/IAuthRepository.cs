@@ -8,5 +8,6 @@ namespace Escuela.Domain.Repositories
 {
     public interface IAuthRepository
     {
+        Task<bool> Login(string userName, string password);
     }
 }

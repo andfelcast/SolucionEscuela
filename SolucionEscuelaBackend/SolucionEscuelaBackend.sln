@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscuelaWebAPI", "EscuelaWebAPI\EscuelaWebAPI.csproj", "{4FD663E7-C168-4AFE-9E3B-E3AF4EFBE3C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Escuela.Domain", "Escuela.Domain\Escuela.Domain.csproj", "{FC57ADCE-9573-4507-BCC1-C520017EDF7F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Escuela.Utils", "Escuela.Utils\Escuela.Utils.csproj", "{F2483F33-93FA-447D-8A56-07C788724D3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Escuela.Infrastructure", "Escuela.Infrastructure\Escuela.Infrastructure.csproj", "{513E5844-4291-466D-8A97-AF4E46A72C0C}"
 EndProject
@@ -27,10 +25,6 @@ Global
 		{FC57ADCE-9573-4507-BCC1-C520017EDF7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC57ADCE-9573-4507-BCC1-C520017EDF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC57ADCE-9573-4507-BCC1-C520017EDF7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2483F33-93FA-447D-8A56-07C788724D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2483F33-93FA-447D-8A56-07C788724D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2483F33-93FA-447D-8A56-07C788724D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2483F33-93FA-447D-8A56-07C788724D3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{513E5844-4291-466D-8A97-AF4E46A72C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{513E5844-4291-466D-8A97-AF4E46A72C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{513E5844-4291-466D-8A97-AF4E46A72C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU

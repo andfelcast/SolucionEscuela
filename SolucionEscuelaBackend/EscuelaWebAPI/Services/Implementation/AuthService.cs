@@ -2,6 +2,7 @@
 using EscuelaWebAPI.DTO.Auth;
 using EscuelaWebAPI.DTO.General;
 using EscuelaWebAPI.Services.Interfaces;
+using EscuelaWebAPI.Utils;
 
 namespace EscuelaWebAPI.Services.Implementation
 {
@@ -14,7 +15,12 @@ namespace EscuelaWebAPI.Services.Implementation
             _authRepository = authRepository;
         }
         public async Task<ResponseDTO> Authenticate(LoginDTO dto) {
-            return null;        
+            bool isValid = await _authRepository.Login(dto.UserName, Utilities.Encrypt(dto.Password));
+            return new ResponseDTO
+            {
+                IsValid = isValid,
+                Message = isValid ? "Exitoso" : "Login fallido",
+            };
         }
     }
 }

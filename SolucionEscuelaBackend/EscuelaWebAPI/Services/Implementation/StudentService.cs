@@ -1,6 +1,8 @@
 ﻿using Escuela.Domain.Repositories;
 using EscuelaWebAPI.DTO.General;
+using EscuelaWebAPI.DTO.Student;
 using EscuelaWebAPI.Services.Interfaces;
+using EscuelaWebAPI.Utils;
 
 namespace EscuelaWebAPI.Services.Implementation
 {
@@ -14,6 +16,10 @@ namespace EscuelaWebAPI.Services.Implementation
         }
         public async Task<ResponseDTO> GetAll()
         {
+            List<StudentDTO> lstStudents = new List<StudentDTO>();
+            foreach (var item in await _studentRepository.GetAll()) {
+                lstStudents.Add(Utilities.ConvertToDto(item));
+            }
             return null;
         }
 

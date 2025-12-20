@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Escuela.Domain\Escuela.Domain.csproj" />
     <ProjectReference Include="..\Escuela.Infrastructure\Escuela.Infrastructure.csproj" />
-    <ProjectReference Include="..\Escuela.Utils\Escuela.Utils.csproj" />
   </ItemGroup>
 
 </Project>
