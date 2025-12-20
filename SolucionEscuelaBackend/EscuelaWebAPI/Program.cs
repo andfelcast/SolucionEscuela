@@ -1,7 +1,9 @@
 using Escuela.Domain.Repositories;
+using Escuela.Infrastructure.Persistence;
 using Escuela.Infrastructure.Repositories;
 using EscuelaWebAPI.Services.Implementation;
 using EscuelaWebAPI.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<EscuelaDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EscuelaDBConnection")));
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
