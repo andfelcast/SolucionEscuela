@@ -12,6 +12,7 @@ namespace Escuela.Domain.Repositories
         Task<List<Student>> GetAll();
         Task<Student> GetById(int id);
         Task<string> Register(Student objStudent);
+        Task<bool> AddSubjects(int id, int[] subjectIds);
         Task<bool> Update(Student objStudent);
         Task<bool> Delete(int id);
     }

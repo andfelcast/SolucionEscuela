@@ -1,5 +1,6 @@
 ﻿using EscuelaWebAPI.DTO.Student;
 using EscuelaWebAPI.DTO.Teacher;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace EscuelaWebAPI.DTO.Subject
 {
@@ -10,6 +11,7 @@ namespace EscuelaWebAPI.DTO.Subject
         public string Description { get; set; }
         public int Credits { get; set; }
         public int TeacherId { get; set; }
+        public bool Active { get; set; }
         public TeacherDTO Teacher { get; set; }
         public List<StudentDTO> Students { get; set; }
 

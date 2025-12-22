@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EscuelaWebAPI.DTO.General;
+using EscuelaWebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,85 @@ namespace EscuelaWebAPI.Controllers
     [ApiController]
     public class SubjectController : ControllerBase
     {
-        // GET: api/<SubjectController>
+        private readonly ISubjectService _service;
+        private readonly ILogger<SubjectController> _logger;
+
+        public SubjectController(ISubjectService service, ILogger<SubjectController> logger)
+        {
+            _service = service;
+            _logger = logger;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            _logger.LogTrace("Start Subject List service");
+            ResponseDTO response = await _service.GetAll();
+            if (!response.IsValid)
+            {
+                _logger.LogWarning("GetAll: " + response.Message);
+                return NotFound(response);
+            }
+            _logger.LogInformation("Subject List Service executed");
+            return Ok(response);
         }
 
-        // GET api/<SubjectController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<SubjectController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("GetById")]
+        public async Task<IActionResult> GetById(RequestDTO dto)
         {
+            _logger.LogTrace("Start Subject Detail service");
+            ResponseDTO response = await _service.GetById(dto);
+            if (!response.IsValid)
+            {
+                _logger.LogWarning("GetById: " + response.Message);
+                return NotFound(response);
+            }
+            _logger.LogInformation("Subject Detail Service executed");
+            return Ok(response);
         }
 
-        // PUT api/<SubjectController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [Route("Insert")]
+        public async Task<IActionResult> Insert(RequestDTO dto)
         {
+            ResponseDTO response = await _service.CreateNew(dto);
+            if (!response.IsValid)
+            {
+                _logger.LogError("Register: " + response.Message);
+                return BadRequest(response);
+            }
+            _logger.LogInformation("Subject Creation Service executed");
+            return Ok(response);
         }
 
-        // DELETE api/<SubjectController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost]
+        [Route("Update")]
+        public async Task<IActionResult> Update(RequestDTO dto)
         {
+            ResponseDTO response = await _service.Update(dto);
+            if (!response.IsValid)
+            {
+                _logger.LogError("Update: " + response.Message);
+                return BadRequest(response);
+            }
+            _logger.LogInformation("Subject Update Service executed");
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(RequestDTO dto)
+        {
+            ResponseDTO response = await _service.Delete(dto);
+            if (!response.IsValid)
+            {
+                _logger.LogError("Delete: " + response.Message);
+                return BadRequest(response);
+            }
+            _logger.LogInformation("Subject Delete Service executed");
+            return Ok(response);
         }
     }
 }

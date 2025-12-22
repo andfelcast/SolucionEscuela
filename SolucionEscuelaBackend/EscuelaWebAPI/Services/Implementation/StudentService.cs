@@ -1,4 +1,5 @@
-﻿using Escuela.Domain.Repositories;
+﻿using Escuela.Domain.Entities;
+using Escuela.Domain.Repositories;
 using EscuelaWebAPI.DTO.General;
 using EscuelaWebAPI.DTO.Student;
 using EscuelaWebAPI.Services.Interfaces;
@@ -51,13 +52,40 @@ namespace EscuelaWebAPI.Services.Implementation
             };
         }
 
+        public async Task<ResponseDTO> AddSubjects(RequestDTO dto) {
+            int studentId = Convert.ToInt32(dto.Id);
+            int[] subjectIds = dto.Body as int[];
+            bool success = await _studentRepository.AddSubjects(studentId, subjectIds);
+            return new ResponseDTO
+            {
+                IsValid = success,
+                Message = success ? "Exitoso" : "Error en actualización",
+                ResultData = null
+            };
+        }
+
         public async Task<ResponseDTO> Update(RequestDTO dto)
         {
-            return null;
+            StudentDTO student = dto.Body as StudentDTO;
+            bool success = await _studentRepository.Update(Utilities.ConvertToEntity(student));
+            return new ResponseDTO
+            {
+                IsValid = success,
+                Message = success ? "Exitoso" : "Error en actualización",
+                ResultData = null
+            };
+
         }
         public async Task<ResponseDTO> Delete(RequestDTO dto)
         {
-            return null;
+            int id = Convert.ToInt32(dto.Id);
+            bool success = await _studentRepository.Delete(id);
+            return new ResponseDTO
+            {
+                IsValid = success,
+                Message = success ? "Exitoso" : "No hay registros por eliminar",
+                ResultData = null
+            };
         }
     }
 }

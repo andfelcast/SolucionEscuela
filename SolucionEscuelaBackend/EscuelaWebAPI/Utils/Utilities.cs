@@ -94,9 +94,31 @@ namespace EscuelaWebAPI.Utils
                 FirstName = dto.FirstName,
                 Id = dto.Id,
                 LastName = dto.LastName,
-                Password = dto.Password,
+                Password = Encrypt(dto.Password),
                 Phone = dto.Phone,
                 UserName = dto.UserName
+            };
+        }
+
+        public static Subject ConvertToEntity(SubjectDTO dto) {
+            return new Subject
+            {
+                Active = dto.Active,
+                Credits = dto.Credits,
+                Description = dto.Description,
+                Name = dto.Name,
+                Id = dto.Id,
+                TeacherId = dto.TeacherId
+            };
+        }
+
+        public static Teacher ConvertToEntity(TeacherDTO dto) {
+            return new Teacher
+            {
+                Active = dto.Active,
+                EntryDate = dto.EntryDate,
+                Id = dto.Id,
+                Name = dto.Name
             };
         }
     }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EscuelaWebAPI.DTO.General;
+using EscuelaWebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,85 @@ namespace EscuelaWebAPI.Controllers
     [ApiController]
     public class TeacherController : ControllerBase
     {
-        // GET: api/<TeacherController>
+        private readonly ITeacherService _service;
+        private readonly ILogger<TeacherController> _logger;
+
+        public TeacherController(ITeacherService service, ILogger<TeacherController> logger)
+        {
+            _service = service;
+            _logger = logger;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            _logger.LogTrace("Start Teacher List service");
+            ResponseDTO response = await _service.GetAll();
+            if (!response.IsValid)
+            {
+                _logger.LogWarning("GetAll: " + response.Message);
+                return NotFound(response);
+            }
+            _logger.LogInformation("Teacher List Service executed");
+            return Ok(response);
         }
 
-        // GET api/<TeacherController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<TeacherController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("GetById")]
+        public async Task<IActionResult> GetById(RequestDTO dto)
         {
+            _logger.LogTrace("Start Teacher Detail service");
+            ResponseDTO response = await _service.GetById(dto);
+            if (!response.IsValid)
+            {
+                _logger.LogWarning("GetById: " + response.Message);
+                return NotFound(response);
+            }
+            _logger.LogInformation("Teacher Detail Service executed");
+            return Ok(response);
         }
 
-        // PUT api/<TeacherController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [Route("Insert")]
+        public async Task<IActionResult> Insert(RequestDTO dto)
         {
+            ResponseDTO response = await _service.CreateNew(dto);
+            if (!response.IsValid)
+            {
+                _logger.LogError("Register: " + response.Message);
+                return BadRequest(response);
+            }
+            _logger.LogInformation("Teacher Creation Service executed");
+            return Ok(response);
         }
 
-        // DELETE api/<TeacherController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost]
+        [Route("Update")]
+        public async Task<IActionResult> Update(RequestDTO dto)
         {
+            ResponseDTO response = await _service.Update(dto);
+            if (!response.IsValid)
+            {
+                _logger.LogError("Update: " + response.Message);
+                return BadRequest(response);
+            }
+            _logger.LogInformation("Teacher Update Service executed");
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(RequestDTO dto)
+        {
+            ResponseDTO response = await _service.Delete(dto);
+            if (!response.IsValid)
+            {
+                _logger.LogError("Delete: " + response.Message);
+                return BadRequest(response);
+            }
+            _logger.LogInformation("Teacher Delete Service executed");
+            return Ok(response);
         }
     }
 }
