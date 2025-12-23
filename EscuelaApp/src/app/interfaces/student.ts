@@ -3,7 +3,7 @@ import { Subject } from "./subject";
 export interface StudentRegister{
     firstName:string;
     lastName:string;
-    birthDate:Date,
+    docNumber:string,
     city:string;
     email:string;
     address:string;

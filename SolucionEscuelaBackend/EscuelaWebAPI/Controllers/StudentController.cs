@@ -1,5 +1,6 @@
 ﻿using EscuelaWebAPI.DTO.General;
 using EscuelaWebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -7,13 +8,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace EscuelaWebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _service;
         private readonly ILogger<StudentController> _logger;
 
-        public StudentController(IStudentService service, ILogger<StudentController> logger) { 
+        public StudentController(IStudentService service, ILogger<StudentController> logger) 
+        { 
             _service = service;
             _logger = logger;
         }
@@ -46,21 +49,7 @@ namespace EscuelaWebAPI.Controllers
             }
             _logger.LogInformation("Student Detail Service executed");
             return Ok(response);
-        }
-
-        [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register(RequestDTO dto)
-        {            
-            ResponseDTO response = await _service.CreateNew(dto);
-            if (!response.IsValid)
-            {
-                _logger.LogError("Register: " + response.Message);
-                return BadRequest(response);
-            }
-            _logger.LogInformation("Student Creation Service executed");
-            return Ok(response);
-        }
+        }        
 
         [HttpPost]
         [Route("Update")]

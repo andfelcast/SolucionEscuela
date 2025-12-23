@@ -48,6 +48,9 @@ public partial class EscuelaDbContext : DbContext
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.DocumentNumber)
+                .HasMaxLength(20)
+                .IsUnicode(false);
             entity.Property(e => e.Password)
                 .HasMaxLength(100)
                 .IsUnicode(false);

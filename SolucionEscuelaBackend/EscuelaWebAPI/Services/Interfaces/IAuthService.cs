@@ -6,5 +6,6 @@ namespace EscuelaWebAPI.Services.Interfaces
     public interface IAuthService
     {
         Task<ResponseDTO> Authenticate(LoginDTO dto);
+        Task<ResponseDTO> ValidateToken(string token);
     }
 }
