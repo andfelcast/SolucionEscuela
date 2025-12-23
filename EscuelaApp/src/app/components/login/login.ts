@@ -3,11 +3,11 @@ import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
 import  { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import { LoginReg } from '../../interfaces/login';
-import { GeneralRequest } from '../../interfaces/general';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -32,32 +32,49 @@ export class Login {
     const objLogin:LoginReg = {
       userName: this.formLogin.value.userName,
       password: this.formLogin.value.pass
-    }
+    }    
 
-    const request:GeneralRequest = {
-      id:"",
-      type:"",
-      body:objLogin
-    };
-
-    this.authService.Login(request).subscribe({
+    this.authService.Login(objLogin).subscribe({
       next:(data) =>{
         if(data.isValid){
-          localStorage.setItem("token",data.resultData.token);
-          this.router.navigateByUrl("/home")
+          Swal.fire({
+                title: "Bienvenido",                
+                icon: "success",
+                timer:3000
+          });
+          localStorage.setItem("token",data.resultData.token);          
+          localStorage.setItem("userId",data.resultData.userId);
+          localStorage.setItem("userName",data.resultData.userName);
+          this.router.navigate(["home"])
         }
         else{
-          alert('Credenciales incorrectas')
+            Swal.fire({
+                title: "Error",
+                text: "Credenciales incorrectas. Favor intente de nuevo",
+                icon: "error",
+                timer:3000
+            });          
+            this.Reset();
         }
       },
       error:(error) => {
-        console.log(error.message);
+        Swal.fire({
+                title: "Error",
+                text: "Credenciales incorrectas. Favor intente de nuevo",
+                icon: "error",
+                timer:3000
+            });
+        this.Reset();
       }
     });
   }
   RegisterNew(){
     debugger;
-    this.router.navigateByUrl("/register");
+    this.router.navigate(["register"]);
+  }
+  private Reset(){    
+    this.formLogin.patchValue({userName:''})
+    this.formLogin.patchValue({pass:''})
   }
 
 }

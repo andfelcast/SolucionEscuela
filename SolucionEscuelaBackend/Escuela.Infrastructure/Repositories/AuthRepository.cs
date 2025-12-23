@@ -1,4 +1,5 @@
-﻿using Escuela.Domain.Repositories;
+﻿using Escuela.Domain.Entities;
+using Escuela.Domain.Repositories;
 using Escuela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,8 +16,8 @@ namespace Escuela.Infrastructure.Repositories
         public AuthRepository(EscuelaDbContext context) { 
             _context = context;
         }
-        public async Task<bool> Login(string userName, string password) {
-            return await _context.Students.CountAsync(x => x.UserName == userName && x.Password == password) == 1;
+        public async Task<Student> Login(string userName, string password) {
+            return await _context.Students.FirstOrDefaultAsync(x => x.UserName == userName && x.Password == password);
         }
     }
 }

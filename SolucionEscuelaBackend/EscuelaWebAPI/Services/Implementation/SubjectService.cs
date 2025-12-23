@@ -5,16 +5,24 @@ using EscuelaWebAPI.DTO.Subject;
 using EscuelaWebAPI.DTO.Teacher;
 using EscuelaWebAPI.Services.Interfaces;
 using EscuelaWebAPI.Utils;
+using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace EscuelaWebAPI.Services.Implementation
 {
     public class SubjectService : ISubjectService
     {
         private readonly ISubjectRepository _subjectRepository;
+        private readonly JsonSerializerOptions options;
 
         public SubjectService(ISubjectRepository subjectRepository)
         {
             _subjectRepository = subjectRepository;
+            options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true
+            };
         }
 
         public async Task<ResponseDTO> GetAll()

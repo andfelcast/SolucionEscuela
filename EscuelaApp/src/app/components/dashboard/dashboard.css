@@ -1,0 +1,14 @@
+.example-container {
+  height: calc(100vh - 64px); /* Adjust 64px based on your toolbar height */
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+.mat-sidenav-content {
+  padding: 16px;
+}
+
+/* Optional: Add basic styling for the sidenav width */
+mat-sidenav {
+  width: 200px;
+}

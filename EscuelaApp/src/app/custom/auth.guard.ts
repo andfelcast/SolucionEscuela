@@ -3,8 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { AuthService } from '../services/auth-service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-     debugger;
+export const authGuard: CanActivateFn = (route, state) => {     
      const token = localStorage.getItem("token") || "";
      const router = inject(Router);
 

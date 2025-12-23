@@ -4,16 +4,22 @@ using EscuelaWebAPI.DTO.General;
 using EscuelaWebAPI.DTO.Student;
 using EscuelaWebAPI.Services.Interfaces;
 using EscuelaWebAPI.Utils;
+using System.Text.Json;
 
 namespace EscuelaWebAPI.Services.Implementation
 {
     public class StudentService : IStudentService
     {
         private readonly IStudentRepository _studentRepository;
-
+        private readonly JsonSerializerOptions options;
         public StudentService(IStudentRepository studentRepository)
         {
             _studentRepository = studentRepository;
+            options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true
+            };
         }
         public async Task<ResponseDTO> GetAll()
         {            
@@ -41,20 +47,32 @@ namespace EscuelaWebAPI.Services.Implementation
         }
 
         public async Task<ResponseDTO> CreateNew(RequestDTO dto)
-        {
-            StudentDTO student = dto.Body as StudentDTO;
-            string userName = await _studentRepository.Register(Utilities.ConvertToEntity(student!));
-            return new ResponseDTO
+        {            
+            try
             {
-                IsValid = userName != null,
-                Message = userName != null ? "Exitoso" : "No hay registros",
-                ResultData = userName
-            };
+                StudentDTO student = JsonSerializer.Deserialize<StudentDTO>(dto.Body.ToString(), options);
+                string userName = await _studentRepository.Register(Utilities.ConvertToEntity(student!));
+                return new ResponseDTO
+                {
+                    IsValid = userName != null,
+                    Message = userName != null ? "Exitoso" : "No hay registros",
+                    ResultData = userName
+                };
+            }
+            catch (Exception)
+            {
+                return new ResponseDTO
+                {
+                    IsValid = false,
+                    Message = "No exitoso",
+                    ResultData = null
+                };
+            }
         }
 
         public async Task<ResponseDTO> AddSubjects(RequestDTO dto) {
             int studentId = Convert.ToInt32(dto.Id);
-            int[] subjectIds = dto.Body as int[];
+            int[] subjectIds = (int[])dto.Body;
             bool success = await _studentRepository.AddSubjects(studentId, subjectIds);
             return new ResponseDTO
             {
@@ -66,7 +84,7 @@ namespace EscuelaWebAPI.Services.Implementation
 
         public async Task<ResponseDTO> Update(RequestDTO dto)
         {
-            StudentDTO student = dto.Body as StudentDTO;
+            StudentDTO student = (StudentDTO)dto.Body;
             bool success = await _studentRepository.Update(Utilities.ConvertToEntity(student));
             return new ResponseDTO
             {

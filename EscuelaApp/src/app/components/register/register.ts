@@ -4,11 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { StudentService } from '../../services/student-service';
-import { Router } from 'express';
+import { Router } from '@angular/router';
 import { StudentRegister } from '../../interfaces/student';
 import { GeneralRequest } from '../../interfaces/general';
+import { AuthService } from '../../services/auth-service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -20,14 +20,14 @@ import { GeneralRequest } from '../../interfaces/general';
 })
 
 export class Register {
-  private service = inject(StudentService);
+  private service = inject(AuthService);
      private router = inject(Router);
      public formBuild = inject(FormBuilder);
 
      public formRegistro: FormGroup = this.formBuild.group({
           nombres: ['',Validators.required],
           apellidos: ['',Validators.required],
-          fecNacimiento:['', Validators.required],
+          numDocumento:['', Validators.required],
           direccion:['', Validators.required],
           ciudad:['', Validators.required],
           telefono:['', Validators.required],
@@ -41,10 +41,10 @@ export class Register {
           const objRegister:StudentRegister = {
                firstName: this.formRegistro.value.nombres,
                lastName: this.formRegistro.value.apellidos,
-               docNumber: this.formRegistro.value.numDocumento,
+               documentNumber: this.formRegistro.value.numDocumento.toString(),
                address: this.formRegistro.value.direccion,
                city: this.formRegistro.value.ciudad,
-               phone: this.formRegistro.value.telefono,
+               phone: this.formRegistro.value.telefono.toString(),
                email: this.formRegistro.value.correo,
                password: this.formRegistro.value.clave,                             
           }
@@ -56,9 +56,20 @@ export class Register {
           this.service.Register(request).subscribe({
                next: (data) =>{
                     if(data.isValid){
+                      Swal.fire({
+                        title: "Registro completo",
+                        text: "Su nombre de usuario asignado es: " + data.resultData.toString() + ".",
+                        icon: "success",
+                        timer:3000
+                      });
                          this.router.navigate([''])
                     }else{
-                         alert("No se pudo registrar")
+                         Swal.fire({
+                              title: "Registro fallido",
+                              text: "No se pudo realizar el registro del estudiante. Favor intente más tarde",
+                              icon: "error",
+                              timer:3000
+                         });
                     }
                }, error:(error) =>{
                     console.log(error.message);

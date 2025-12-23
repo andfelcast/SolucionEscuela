@@ -1,12 +1,17 @@
-﻿using Escuela.Domain.Repositories;
+﻿using Escuela.Domain.Entities;
+using Escuela.Domain.Repositories;
 using EscuelaWebAPI.DTO.Auth;
 using EscuelaWebAPI.DTO.General;
+using EscuelaWebAPI.DTO.Student;
 using EscuelaWebAPI.Services.Interfaces;
 using EscuelaWebAPI.Utils;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace EscuelaWebAPI.Services.Implementation
 {
@@ -14,18 +19,30 @@ namespace EscuelaWebAPI.Services.Implementation
     {
         private readonly IAuthRepository _authRepository;
         private readonly IConfiguration _configuration;
+        private readonly JsonSerializerOptions options;
 
         public AuthService(IAuthRepository authRepository, IConfiguration configuration)
         {
             _authRepository = authRepository;
             _configuration = configuration;
+            options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true
+            };
         }
-        public async Task<ResponseDTO> Authenticate(LoginDTO dto) {
-            bool isValid = await _authRepository.Login(dto.UserName, Utilities.Encrypt(dto.Password));
+        public async Task<ResponseDTO> Authenticate(LoginDTO dto) {            
+            StudentDTO student = Utilities.ConvertToDto(await _authRepository.Login(dto.UserName, Utilities.Encrypt(dto.Password)))!;
             return new ResponseDTO
             {
-                IsValid = isValid,
-                Message = isValid ? "Exitoso" : "Login fallido",
+                IsValid = student != null,
+                Message = student != null ? "Exitoso" : "Login fallido",
+                ResultData = student != null ? new
+                {
+                    UserId = student!.Id,
+                    UserName = student.UserName,
+                    Token = Utilities.GenerateJWT(student)
+                } : null
             };
         }
         public async Task<ResponseDTO> ValidateToken(string token) {

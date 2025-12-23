@@ -3,7 +3,7 @@ import { Subject } from "./subject";
 export interface StudentRegister{
     firstName:string;
     lastName:string;
-    docNumber:string,
+    documentNumber:string,
     city:string;
     email:string;
     address:string;
@@ -14,10 +14,10 @@ export interface StudentRegister{
 export interface Student extends StudentRegister{
     id:number;
     userName:string;
-    credits:string;
+    credits:number;
     active:boolean;
     creationDate:Date;
-    Subjects:Subject[];
+    subjects:Subject[];
 
 }
 

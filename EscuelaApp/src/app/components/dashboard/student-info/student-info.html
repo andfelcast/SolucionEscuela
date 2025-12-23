@@ -1,1 +1,29 @@
-<p>student-info works!</p>
+<div class="card-container">
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <mat-card-title> Información de usuario</mat-card-title>            
+        </mat-card-header>  
+        <mat-card-content>                        
+                <mat-label>Usuario:</mat-label>&nbsp;
+                <mat-label>{{ user.userName }}</mat-label>
+            <br />            
+                <mat-label>Nombre:</mat-label>&nbsp;
+                <mat-label>{{ user.firstName }} {{user.lastName}}</mat-label>
+            <br />            
+                <mat-label>Número de documento:</mat-label>&nbsp;
+                <mat-label>{{ user.documentNumber }}</mat-label>
+            <br />
+                <mat-label>Dirección:</mat-label>&nbsp;
+                <mat-label>{{ user.address }}</mat-label>
+            <br />
+                <mat-label>Teléfono:</mat-label>&nbsp;
+                <mat-label>{{ user.phone }}</mat-label>
+            <br />
+                <mat-label>E-mail:</mat-label>&nbsp;
+                <mat-label>{{ user.email }}</mat-label>
+            <br />
+                    
+        </mat-card-content>  
+    </mat-card>
+    
+</div>

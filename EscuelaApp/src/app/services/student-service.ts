@@ -21,11 +21,7 @@ export class StudentService {
   GetById(request: GeneralRequest): Observable<GeneralResponse>{
     return this.http.post<GeneralResponse>(this.apiUrl + 'Student/GetById',request);
   }
-
-  Register(request: GeneralRequest): Observable<GeneralResponse>{
-    return this.http.post<GeneralResponse>(this.apiUrl + 'Student/Register',request);
-  }
-
+  
   Update(request: GeneralRequest): Observable<GeneralResponse>{
     return this.http.post<GeneralResponse>(this.apiUrl + 'Student/Update',request);
   }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Escuela.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Escuela.Domain.Repositories
 {
     public interface IAuthRepository
     {
-        Task<bool> Login(string userName, string password);
+        Task<Student> Login(string userName, string password);
     }
 }

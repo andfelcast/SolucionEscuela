@@ -30,7 +30,7 @@ namespace EscuelaWebAPI.Controllers
         }
         [HttpPost]
         [Route("Login")]
-        public async Task<ActionResult> Login([FromBody] LoginDTO dto)
+        public async Task<ActionResult> Login(LoginDTO dto)
         {
             _logger.LogTrace("Start Login service");
             ResponseDTO response = await _service.Authenticate(dto);

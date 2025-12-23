@@ -33,6 +33,7 @@ namespace EscuelaWebAPI.Utils
                 CreationDate =  item.CreationDate,
                 Credits = item.StudentXsubjects.Count * 3,
                 Email = item.Email,
+                Phone = item.Phone,
                 LastName = item.LastName,
                 UserName = item.UserName,      
                 Subjects = lstSubjects
