@@ -24,6 +24,56 @@
             <br />
                     
         </mat-card-content>  
-    </mat-card>
-    
+    </mat-card>    
 </div>
+<br />
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Asignatura</th>
+                <th>Descripción</th>
+                <th>Profesor</th>
+                <th>Créditos</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(item of lstStudentSubjects; track item.id){ 
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.teacher.name}}</td>
+                <td>{{item.credits}}</td>                
+                <td>
+                    <button class="btn btn-info" (click)="Detail(item.id)">                        
+                        <span>Detalle</span>
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<br />
+<div class="table">
+    <div class="row">
+        <div class="col-md-3">
+            <mat-label>Tiene {{ currentCredits }} de {{ totalCredits }} créditos posibles</mat-label>
+        </div>        
+        <div class="col-md-3">
+            <button class="button btn btn-primary" (click)="CheckSubjects()">Agregar o eliminar asignaturas</button>
+        </div>                
+    </div>    
+</div>
+@if(showSubjects){
+    <div >
+        <mat-selection-list  [(ngModel)]="selectedSubjects" (selectionChange)="onSelectionChange($event)">
+            @for (item of lstSubjects; track item) {
+                <mat-list-option [value]="item.id">{{item.name}} - {{item.teacher.name}}</mat-list-option>                                
+            }
+        </mat-selection-list>
+        <button class="button btn btn-primary" (click)="SaveSubjects()")>Guardar</button>
+    </div>
+}
+

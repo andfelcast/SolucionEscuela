@@ -37,7 +37,7 @@ namespace EscuelaWebAPI.Services.Implementation
         public async Task<ResponseDTO> GetById(RequestDTO dto)
         {
             ResponseDTO response = new ResponseDTO();
-            StudentDTO student = Utilities.ConvertToDto(await _studentRepository.GetById(Convert.ToInt32(dto.Id)))!;
+            StudentDTO student = Utilities.ConvertToDto(await _studentRepository.GetById(Convert.ToInt32(dto.Id)),true)!;
             return new ResponseDTO
             {
                 IsValid = student != null,
@@ -72,7 +72,7 @@ namespace EscuelaWebAPI.Services.Implementation
 
         public async Task<ResponseDTO> AddSubjects(RequestDTO dto) {
             int studentId = Convert.ToInt32(dto.Id);
-            int[] subjectIds = (int[])dto.Body;
+            int[] subjectIds = JsonSerializer.Deserialize<int[]>(dto.Body.ToString());
             bool success = await _studentRepository.AddSubjects(studentId, subjectIds);
             return new ResponseDTO
             {

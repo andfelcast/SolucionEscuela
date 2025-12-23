@@ -22,6 +22,10 @@ export class StudentService {
     return this.http.post<GeneralResponse>(this.apiUrl + 'Student/GetById',request);
   }
   
+  AddSubjects(request:GeneralRequest):Observable<GeneralResponse>{
+    return this.http.post<GeneralResponse>(this.apiUrl + 'Student/AddSubjects',request);
+  }
+
   Update(request: GeneralRequest): Observable<GeneralResponse>{
     return this.http.post<GeneralResponse>(this.apiUrl + 'Student/Update',request);
   }

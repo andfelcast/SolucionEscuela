@@ -43,7 +43,7 @@ namespace EscuelaWebAPI.Services.Implementation
         public async Task<ResponseDTO> GetById(RequestDTO dto)
         {
             ResponseDTO response = new ResponseDTO();
-            SubjectDTO subject = Utilities.ConvertToDto(await _subjectRepository.GetById(Convert.ToInt32(dto.Id)))!;
+            SubjectDTO subject = Utilities.ConvertToDto(await _subjectRepository.GetById(Convert.ToInt32(dto.Id)),true)!;
             return new ResponseDTO
             {
                 IsValid = subject != null,

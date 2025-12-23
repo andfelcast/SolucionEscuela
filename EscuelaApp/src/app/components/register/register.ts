@@ -36,7 +36,15 @@ export class Register {
      })
 
      Register(){
-          if(this.formRegistro.invalid) return;
+          if(this.formRegistro.invalid){ 
+               Swal.fire({
+                    title: "Atención",
+                    text: "Favor completar todos los campos obligatorios",
+                    icon: "error",
+                    timer:3000
+               });     
+               return;
+          }
 
           const objRegister:StudentRegister = {
                firstName: this.formRegistro.value.nombres,

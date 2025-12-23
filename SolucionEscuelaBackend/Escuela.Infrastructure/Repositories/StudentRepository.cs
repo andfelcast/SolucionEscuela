@@ -60,7 +60,7 @@ namespace Escuela.Infrastructure.Repositories
                 for (int i = 0; i < subjectIds.Length; i++)
                 {
 
-                    if (lstSubjects.Count(x => x.Id == subjectIds[i]) == 0)
+                    if (lstSubjects.Count(x => x.SubjectId == subjectIds[i] && x.StudentId == id) == 0)
                     {
                         StudentXsubject newSubject = new StudentXsubject
                         {

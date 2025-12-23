@@ -13,14 +13,20 @@ namespace EscuelaWebAPI.Utils
 {
     public static class Utilities
     {
-        public static StudentDTO? ConvertToDto(Student item)
+        public static StudentDTO? ConvertToDto(Student item, bool includeSubjects = false)
         {
-            if (item == null) {
+            if (item == null)
+            {
                 return null;
             }
             List<SubjectDTO> lstSubjects = new List<SubjectDTO>();
-            foreach (var element in item.StudentXsubjects) {
-                lstSubjects.Add(ConvertToDto(element.Subject)!);
+            if (includeSubjects)
+            {
+
+                foreach (var element in item.StudentXsubjects)
+                {
+                    lstSubjects.Add(ConvertToDto(element.Subject)!);
+                }
             }
             return new StudentDTO
             {
@@ -30,20 +36,29 @@ namespace EscuelaWebAPI.Utils
                 DocumentNumber = item.DocumentNumber,
                 City = item.City,
                 FirstName = item.FirstName,
-                CreationDate =  item.CreationDate,
+                CreationDate = item.CreationDate,
                 Credits = item.StudentXsubjects.Count * 3,
                 Email = item.Email,
                 Phone = item.Phone,
                 LastName = item.LastName,
-                UserName = item.UserName,      
+                UserName = item.UserName,
                 Subjects = lstSubjects
             };
         }
 
-        public static SubjectDTO? ConvertToDto(Subject item)
+        public static SubjectDTO? ConvertToDto(Subject item, bool includeStudents = false)
         {
-            if (item == null) {
+            if (item == null)
+            {
                 return null;
+            }
+            List<StudentDTO> lstStudents = new List<StudentDTO>();
+            if (includeStudents)
+            {
+                foreach (var element in item.StudentXsubjects)
+                {
+                    lstStudents.Add(ConvertToDto(element.Student)!);
+                }
             }
             return new SubjectDTO
             {
@@ -52,23 +67,28 @@ namespace EscuelaWebAPI.Utils
                 Id = item.Id,
                 Name = item.Name,
                 TeacherId = item.TeacherId,
-                Teacher = ConvertToDto(item.Teacher)!
+                Teacher = ConvertToDto(item.Teacher)!,
+                Active = item.Active,
+                Students = lstStudents
             };
         }
 
-        public static TeacherDTO? ConvertToDto(Teacher item)
+        public static TeacherDTO? ConvertToDto(Teacher item, bool includeSubjects = false)
         {
             if (item == null)
             {
                 return null;
             }
             List<SubjectDTO> lstSubjects = new List<SubjectDTO>();
-            foreach (var element in item.Subjects)
+            if (includeSubjects)
             {
-                lstSubjects.Add(ConvertToDto(element)!);
+                foreach (var element in item.Subjects)
+                {
+                    lstSubjects.Add(ConvertToDto(element)!);
+                }
             }
             return new TeacherDTO
-            {                
+            {
                 Id = item.Id,
                 Name = item.Name,
                 Active = item.Active,
@@ -77,7 +97,8 @@ namespace EscuelaWebAPI.Utils
             };
         }
 
-        public static string Encrypt(string data) {
+        public static string Encrypt(string data)
+        {
             using (SHA256 sha256Hash = SHA256.Create())
             {
                 // ComputeHash - returns byte array
@@ -135,7 +156,8 @@ namespace EscuelaWebAPI.Utils
             };
         }
 
-        public static Subject ConvertToEntity(SubjectDTO dto) {
+        public static Subject ConvertToEntity(SubjectDTO dto)
+        {
             return new Subject
             {
                 Active = dto.Active,
@@ -147,7 +169,8 @@ namespace EscuelaWebAPI.Utils
             };
         }
 
-        public static Teacher ConvertToEntity(TeacherDTO dto) {
+        public static Teacher ConvertToEntity(TeacherDTO dto)
+        {
             return new Teacher
             {
                 Active = dto.Active,

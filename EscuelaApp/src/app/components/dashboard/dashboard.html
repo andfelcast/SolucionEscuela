@@ -1,6 +1,5 @@
 <mat-toolbar color="primary">
-  <!-- <button mat-icon-button (click)="sidenav.toggle()"> -->
-    <button mat-icon-button>
+  <button mat-icon-button (click)="sidenav.toggle()">    
     <mat-icon>menu</mat-icon>
   </button>
   <span>Sistema Universitario Estudiantil</span>
@@ -20,11 +19,7 @@
       <a mat-list-item href="/home/student">
         <mat-icon mat-list-icon>person_pin</mat-icon>
         <span>Info estudiante</span>
-      </a>
-      <a mat-list-item href="/home/subjects">
-        <mat-icon mat-list-icon>note_add</mat-icon>
-        <span>Asignaturas</span>
-      </a>
+      </a>      
       <a mat-list-item routerLink="/">
         <mat-icon mat-list-icon>exit_to_app</mat-icon>
         <span>Cerrar Sesión</span>
