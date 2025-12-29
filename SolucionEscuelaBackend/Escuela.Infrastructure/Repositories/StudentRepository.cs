@@ -24,7 +24,7 @@ namespace Escuela.Infrastructure.Repositories
 
         public async Task<Student> GetById(int id)
         {
-            return await _context.Students.Include(x => x.StudentXsubjects).ThenInclude(y => y.Subject).FirstAsync(w => w.Id == id && w.Active);
+            return await _context.Students.Include(x => x.StudentXsubjects.Where(a => a.Active)).ThenInclude(y => y.Subject).FirstAsync(w => w.Id == id && w.Active);
         }
 
         public async Task<string> Register(Student objStudent) {

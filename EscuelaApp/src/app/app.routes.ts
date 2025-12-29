@@ -5,15 +5,16 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { StudentInfo } from './components/dashboard/student-info/student-info';
 import { SubjectInfo } from './components/dashboard/subject-info/subject-info';
 import { AddSubjects } from './components/dashboard/add-subjects/add-subjects';
+import { authGuard } from './custom/auth.guard';
 
 export const routes: Routes = [
     { path: "", component:Login},
     { path:"register",component:Register},
-    { path:"home",component:Dashboard,
+    { path:"home",component:Dashboard, canActivate: [authGuard],
         children: [
-            {path: 'student', component: StudentInfo},
-            {path: 'subjects', component: SubjectInfo},
-            {path: 'addSubjects', component: AddSubjects},
+            {path: 'student', component: StudentInfo, canActivate: [authGuard]},
+            {path: 'subjects', component: SubjectInfo, canActivate: [authGuard]},
+            {path: 'addSubjects', component: AddSubjects, canActivate: [authGuard]},
         ],
     }
 ];

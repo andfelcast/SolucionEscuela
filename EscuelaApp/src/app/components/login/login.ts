@@ -15,7 +15,12 @@ import Swal from 'sweetalert2';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {  
+export class Login implements OnInit{
+  ngOnInit(): void {
+    if (localStorage.getItem('token')) {
+      localStorage.clear();  
+    }
+  }  
   private authService = inject(AuthService);
   private router = inject(Router);
   public formBuild = inject(FormBuilder);
